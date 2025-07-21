@@ -177,7 +177,7 @@ you can use any characters (e.g. >#"()+-:;=<@{{}}^'* etc)
             content = response.choices[0].message.content or ""
             return content, json.loads(content)["translated"], json.loads(content)["explanation"]
         except Exception as e:
-            return content, f"Error: {e}", ""
+            return "", f"Error: {e}", ""
 
 
 def main():
