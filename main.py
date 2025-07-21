@@ -23,6 +23,8 @@ class TranslationRequest(BaseModel):
 async def translate(req: TranslationRequest):
     cleaned = req.text.strip().lower()
     if cleaned in cache:
+        print("Using cache")
+        
         return {"translation": cache[cleaned][0], "raw": cache[cleaned][1]}
 
     output = translator.translate(req.text)
