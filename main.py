@@ -7,7 +7,7 @@ from cachetools import LRUCache
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["darkdeath2796.github.io"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
