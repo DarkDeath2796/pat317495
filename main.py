@@ -7,7 +7,7 @@ from cachetools import LRUCache
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["darkdeath2796.github.io"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -41,3 +41,8 @@ async def return_():
 @app.get("/")
 async def n():
     return 404
+
+
+@app.get("/ping")
+def ping():
+    return {"ping": "pong"}
