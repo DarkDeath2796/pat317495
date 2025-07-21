@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+pydantic
+cachetools
+groq
+python-dotenv
