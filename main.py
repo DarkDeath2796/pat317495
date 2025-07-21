@@ -13,7 +13,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-translator = pat("deepseek-r1-distill-llama-70b")
+translator = pat()
 cache = LRUCache(maxsize=200)
 
 class TranslationRequest(BaseModel):
@@ -23,10 +23,10 @@ class TranslationRequest(BaseModel):
 async def translate(req: TranslationRequest):
     cleaned = req.text.strip().lower()
     if cleaned in cache:
-        return {"translation": cache[cleaned]}
+        return {"translation": cache[cleaned][0], "raw": cache[cleaned][1]}
 
     output = translator.translate(req.text)
-    cache[cleaned] = output[1]
+    cache[cleaned] = [output[1], output[2]]
 
     print(output)
 
