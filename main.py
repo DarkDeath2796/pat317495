@@ -31,7 +31,7 @@ async def translate(req: TranslationRequest):
         return {"translation": cache[cleaned][0], "raw": cache[cleaned][1]}
 
     output = translator.translate(req.text)
-    if not "error" in output[1]
+    if not "error" in output[1]:
         cache[cleaned] = [output[1], output[2]]
     else:
         return {"translation": "Error translating your text, Please try again later.", "raw": ""}
