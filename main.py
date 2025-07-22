@@ -42,8 +42,7 @@ async def translate(req: TranslationRequest):
 # 🛠 FIXED this route
 @app.get("/api/cache")
 async def get_cache():
-    cachestr = "\n".join([f"{k} => {v[0]}" for k, v in cache.items()])
-    return {"cache": cachestr}
+    return cache
 
 # 👻 404 route that returns a real 404
 @app.get("/")
