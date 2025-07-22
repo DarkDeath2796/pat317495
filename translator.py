@@ -178,7 +178,6 @@ fuck, shit, damn, bitch are fine
                 temperature=0.6,
                 max_tokens=2048,
                 stream=False,
-                response_format={"type": "json_object"},
             )
             content = response.choices[0].message.content or ""
             return content, json.loads(content)["translated"], json.loads(content)["explanation"]
