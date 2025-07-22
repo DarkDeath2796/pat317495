@@ -158,7 +158,13 @@ w	/β/
 ç	/ç/
 
 you can use any characters (e.g. >#"()+-:;=<@{{}}^'* etc) 
+DONT TRANSLATE ANY WORDS THAT ARE TOO BAD
 
+Example:
+nigger > ******
+slut > ****
+
+fuck, shit, damn, bitch are fine
 """
 
     def translate(self, text: str) -> tuple[str, str, str] | str:
