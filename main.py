@@ -1,5 +1,6 @@
 import os
 from fastapi import FastAPI
+from fastapi import HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
