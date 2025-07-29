@@ -1,12 +1,18 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from translator import PajAjapTranslator as pat
 from cachetools import LRUCache
+from python-dotenv import load_dotenv
+
+load_dotenv()
+
+password = os.getenv("PWD")
 
 app = FastAPI()
 
-# Enable CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -18,7 +24,6 @@ app.add_middleware(
 translator = pat()
 cache = LRUCache(maxsize=200)
 
-# Pydantic model for translation requests
 class TranslationRequest(BaseModel):
     text: str
 
@@ -39,17 +44,12 @@ async def translate(req: TranslationRequest):
     print(output)
     return {"translation": output[1], "raw": output[2]}
 
-# 🛠 FIXED this route
 @app.get("/api/cache")
-async def get_cache():
+async def get_cache(passsword: str = Query(...)):
+    if passsword != password:
+        raise HTTPException(status_code=403, detail="Access denied. Wrong password.")
     return cache
 
-# 👻 404 route that returns a real 404
-@app.get("/")
-async def root():
-    return {"detail": "Not found"}, 404
-
-# 🏓 Ping-pong test
 @app.get("/ping")
 def ping():
     return {"ping": "pong"}
