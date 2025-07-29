@@ -12,6 +12,8 @@ load_dotenv()
 
 password = os.getenv("PWD")
 
+print(password)
+
 app = FastAPI()
 
 app.add_middleware(
@@ -47,6 +49,7 @@ async def translate(req: TranslationRequest):
 
 @app.get("/api/cache")
 async def get_cache(passsword: str = Query(...)):
+    print(passsword)
     if passsword != password:
         raise HTTPException(status_code=403, detail="Access denied. Wrong password.")
     return cache
@@ -56,7 +59,7 @@ async def read_root():
     with open("index.html", "r", encoding="utf-8") as h:
         html = h.read()
     return HTMLResponse(content=html)
-    
+
 @app.get("/ping")
 def ping():
     return {"ping": "pong"}
