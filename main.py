@@ -5,7 +5,7 @@ from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from translator import PajAjapTranslator as pat
 from cachetools import LRUCache
-from python-dotenv import load_dotenv
+from dotenv import load_dotenv
 
 load_dotenv()
 
