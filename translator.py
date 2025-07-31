@@ -183,7 +183,7 @@ fuck, shit, damn, bitch are fine
             content = response.choices[0].message.content or ""
             return content, json.loads(content)["translated"], json.loads(content)["explanation"]
         except Exception as e:
-            return "", f"Error: {e}", ""
+            return f"Error: {e}"
 
 
 def main():
@@ -192,9 +192,9 @@ def main():
         text = input("Enter text to translate (or 'exit'): ")
         if text.lower() in {"exit", "quit"}:
             break 
-        raw, translated = patranslator.translate(text)
+        translated = patranslator.translate(text)
         #print(raw)
-        print(translated)
+        print(translated[1] if len(translated) == 1 else translated)
 
 
 if __name__ == "__main__":
