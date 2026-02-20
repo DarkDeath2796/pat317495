@@ -8,7 +8,7 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 
 class PajAjapTranslator:
-    def __init__(self, model="openai/gpt-oss-120b") -> None:
+    def __init__(self, model="llama-3.3-70b-versatile") -> None:
         self.model = model
         self.client = groq.Groq(api_key=GROQ_API_KEY) 
         self.wordcount = 71
