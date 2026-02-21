@@ -1,0 +1,88 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a2e;
+    color: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+h1 {
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+}
+
+#trdmrk {
+    margin-bottom: 1.5rem;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+#orig-input,
+#paj-input,
+#thoughys {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 1rem;
+}
+
+textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 0.8rem;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background-color: #0f0f23;
+    color: #e0e0e0;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+    resize: vertical;
+    outline: none;
+}
+
+textarea:focus {
+    border-color: #667eea;
+}
+
+textarea[readonly] {
+    background-color: #16163a;
+    cursor: default;
+}
+
+#thoughys textarea {
+    min-height: 80px;
+    font-size: 0.85rem;
+    color: #aaa;
+}
+
+#buttons {
+    margin-bottom: 1rem;
+}
+
+#translate-button {
+    padding: 0.7rem 2rem;
+    background-color: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#translate-button:hover {
+    background-color: #5a6fd6;
+}
+
+#translate-button:disabled {
+    background-color: #444;
+    cursor: not-allowed;
+}
