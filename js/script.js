@@ -1,3 +1,5 @@
+const API_URL = 'https://pat317495.onrender.com';
+
 const origTextarea = document.getElementById('orig');
 const pajTextarea = document.getElementById('paj');
 const thoughtsTextarea = document.getElementById('thoughs');
@@ -13,7 +15,7 @@ translateButton.addEventListener('click', async () => {
     thoughtsTextarea.value = '';
 
     try {
-        const response = await fetch('/api/translate', {
+        const response = await fetch(`${API_URL}/api/translate`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ text: text })
@@ -33,7 +35,6 @@ translateButton.addEventListener('click', async () => {
     translateButton.textContent = 'Translate';
 });
 
-// Allow Ctrl+Enter to translate
 origTextarea.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key === 'Enter') {
         translateButton.click();
