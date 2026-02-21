@@ -17,7 +17,7 @@ CONFIDENCE_THRESHOLD = 0.85
 
 
 class PajAjapTranslator:
-    def __init__(self, model="openai/gpt-oss-20b") -> None:
+    def __init__(self, model="llama-3.3-70b-versatile") -> None:
         self.model = model
         self.client = groq.Groq(api_key=GROQ_API_KEY)
         self.deterministic = DeterministicTranslator()
