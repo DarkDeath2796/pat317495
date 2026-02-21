@@ -38,9 +38,13 @@ class TranslationRequest(BaseModel):
     text: str
 
 
+def normalize_cache_key(text: str) -> str:
+    return text.strip().lower()
+
+
 @app.post("/api/translate")
 async def translate(req: TranslationRequest):
-    cleaned = req.text.strip().lower()
+    cleaned = normalize_cache_key(req.text)
     if not cleaned:
         return {"translation": "", "raw": ""}
 
@@ -56,9 +60,17 @@ async def translate(req: TranslationRequest):
         if isinstance(output, str) and output.startswith("Error"):
             raise Exception(output)
         if isinstance(output, tuple) and len(output) >= 3:
-            cache.set(cleaned, [output[1], output[2]])
+            translated = output[1]
+            raw = output[2]
+            cache.set(cleaned, [translated, raw])
+
+            # Bidirectional cache: translated text can map back to original text.
+            reverse_key = normalize_cache_key(translated)
+            if reverse_key and reverse_key != cleaned and reverse_key not in cache:
+                cache.set(reverse_key, [cleaned, f"Reverse cached from: {cleaned}"])
+
             logging.info("Translated '%s'", cleaned)
-            return {"translation": output[1], "raw": output[2]}
+            return {"translation": translated, "raw": raw}
         else:
             return {"translation": "Error translating text, Please try again later.", "raw": ""}
     except Exception as e:

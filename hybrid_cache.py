@@ -37,6 +37,18 @@ class HybridCache:
     def _rkey(self, key: str) -> str:
         return f"{CACHE_PREFIX}{key}"
 
+    def _set_redis(self, key: str, value):
+        if not self.redis_available:
+            return
+        try:
+            self.redis_client.set(
+                self._rkey(key),
+                json.dumps(value),
+                ex=DEFAULT_TTL,
+            )
+        except Exception as e:
+            logging.warning("Redis set error: %s", e)
+
     def get(self, key: str):
         # Try Redis first
         if self.redis_available:
@@ -50,22 +62,18 @@ class HybridCache:
             except Exception as e:
                 logging.warning("Redis get error: %s", e)
 
-        return self.lru.get(key)
+        # Fall back to LRU and heal Redis if needed.
+        lru_val = self.lru.get(key)
+        if lru_val is not None and self.redis_available:
+            self._set_redis(key, lru_val)
+        return lru_val
 
     def set(self, key: str, value):
         # Always set in LRU
         self.lru[key] = value
 
-        # Try Redis
-        if self.redis_available:
-            try:
-                self.redis_client.set(
-                    self._rkey(key),
-                    json.dumps(value),
-                    ex=DEFAULT_TTL,
-                )
-            except Exception as e:
-                logging.warning("Redis set error: %s", e)
+        # Also set in Redis when available.
+        self._set_redis(key, value)
 
     def __contains__(self, key: str) -> bool:
         if key in self.lru:
